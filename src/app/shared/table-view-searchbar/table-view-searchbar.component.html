@@ -1,0 +1,30 @@
+<div class="tw-m-24-px">
+    <ng-container>
+      <table class="table-view" style="width: 1100px;">
+        <thead>
+          <tr class="table-row">
+            <th class="header">Title and Sub Title</th>
+            <th class="header">Author</th>
+            <th class="header">First Publish Year</th>
+          </tr>
+        </thead>
+        <tbody class="table-body">
+          <tr *ngFor="let book of booksList | paginate
+          : {
+              itemsPerPage: tableSize,
+              currentPage: page,
+              totalItems: count
+            };
+            let i = index" class="row-data">
+            <td>
+              <a class="tw-no-underline" href="https://openlibrary.org{{ book.key }}" target="_blank">{{ book.title.length < 46 ? book.title : book.title.substr(0,45)+' ...View More' }}</a>
+            </td>
+            <td>
+              {{ book.author_name ? (book.author_name.length > 0 ? book.author_name[0] : "Unknown" ) : "Unknown"}}
+            </td>
+            <td>{{ book.first_publish_year ? book.first_publish_year : "N/A"}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </ng-container>
+  </div>

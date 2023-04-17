@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { SubjectsService } from '../../core/services/subjects.service';
 import { Book } from 'src/app/core/models/book-response.model';
+import { Router } from '@angular/router';
+import { AppRoutingModule } from 'src/app/app-routing.module';
 
 @Component({
   selector: 'front-end-internship-assignment-trending-subjects',
@@ -17,6 +19,7 @@ export class TrendingSubjectsComponent implements OnInit {
   allBooks: Book[] = [];
 
   constructor(
+    private router: Router,
     private route: ActivatedRoute,
     private subjectsService: SubjectsService
   ) {}
@@ -28,13 +31,17 @@ export class TrendingSubjectsComponent implements OnInit {
       this.isLoading = false;
     });
   }
-
+  
   ngOnInit(): void {
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.subjectName = params.get('name') || '';
       this.isLoading = true;
       this.getAllBooks();
     });
+  }
+
+  goHome(){
+    this.router.navigate(['']);
   }
 
 }

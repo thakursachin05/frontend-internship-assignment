@@ -1,18 +1,31 @@
 <div class="header">
   <div class="tw-text-24-px tw-font-600">Open Books Library</div>
-  <div class="search-button">
-    <mat-icon class="tw-mt-16-px" aria-label="Search Icon">search</mat-icon>
-    <input
+  <div class="searchNclear">
+
+    <div class="search-button">
+      <mat-icon class="tw-mt-16-px" aria-label="Search Icon">search</mat-icon>
+      <input
       [formControl]="bookSearch"
       name="searchKey"
       type="text"
       placeholder="Search Books"
       class="tw-border-0 tw-bg-inherit"
-    >
-  </div>
+      >
+    </div>
+    <button class="clear-btn" (click)="changeSearchType()">
+      <mat-icon class="tw-mt-16-px tw-ml-16-px active" id="changeSearch" aria-label="Change Icon"> book </mat-icon>
+      </button>
+      <button class="clear-btn" (click)="clearResults()">
+        <mat-icon class="tw-mt-16-px" aria-label="Delete Icon"> delete </mat-icon>
+        </button>
+    </div>
 </div>
 <div class="tw-flex tw-flex-row tw-m-24-px">
   <section class="trending-subjects">
+    <button class="home tw-mb-16-px tw-p-12-px">
+      <mat-icon>home</mat-icon> 
+      <div class="tw-font-600 tw-text-24-px tw-ml-16-px"> Home</div>
+    </button>
     <div class="tw-font-600 tw-text-24-px">Trending Subjects</div>
     <ul class="tw-list-none tw-pl-0">
       <li class="tw-text-16-px tw-cursor-pointer tw-p-12-px" *ngFor="let subject of trendingSubjects" routerLink="/trending-subject/{{ subject.name }}">
@@ -20,4 +33,37 @@
       </li>
     </ul>
   </section>
+  <div class="tw-m-24-px tw-text-24-px" *ngIf="allBooks.length==0"> No results to display, Please search a valid book title or author name</div>
+  <div *ngIf="allBooks.length > 0">
+      <front-end-internship-assignment-table-view-searchbar
+      [booksList]="allBooks"
+      [searchInput]="searchInput"
+      [page]="page" 
+      [count]="count"
+      [tableSize]="tableSize"
+      ></front-end-internship-assignment-table-view-searchbar>
+    <div class="pagination-div">
+      <div class="tw-text-14-px">
+        Showing {{(page-1)*(tableSize) + 1}} to {{page*tableSize>allBooks.length ? allBooks.length : page*tableSize}} of {{allBooks.length}} entries
+      </div>
+      <div class="page-list">
+        <div>
+        <label for="page">Display</label>
+          <select id="page" name="pagelist" (change)="onTableSizeChange($event)">
+            <option value="5">5</option>
+            <option value="10" selected>10</option>
+            <option value="15">15</option>
+            <option value="20">20</option>
+          </select>
+        </div>
+        <pagination-controls
+        previousLabel=""
+        nextLabel=""
+        (pageChange)="onTableDataChange($event)"
+        >
+      </pagination-controls>
+    </div>
+    </div>
+  </div>
 </div>
+
