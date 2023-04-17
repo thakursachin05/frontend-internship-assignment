@@ -78,11 +78,12 @@ export class HomeComponent implements OnInit {
   changeSearchType(){
     this.titleSearch = !this.titleSearch;
     if(this.titleSearch)
-      document.getElementById('changeSearch')?.classList.add('active');
+    document.getElementById('changeSearch')?.classList.add('active');
     else 
-      document.getElementById('changeSearch')?.classList.remove('active');
+    document.getElementById('changeSearch')?.classList.remove('active');
     if(this.searchInput.length>0){
       this.getResults();
     }
+    this.page = 1;
   }
 }
